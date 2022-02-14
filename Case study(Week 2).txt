@@ -1,0 +1,196 @@
+import java.util.Scanner;
+
+abstract class Item{                                                                       //superclass
+	private int identificationNo;
+	private int noOfCopies;
+	private String title;
+	
+	public abstract void Item();
+
+	//getters and setters
+	
+	public int getIdentificationNo() {
+		return identificationNo;
+	}
+
+	public void setIdentificationNo(int identificationNo) {
+		this.identificationNo = identificationNo;
+	}
+
+	public int getNoOfCopies() {
+		return noOfCopies;
+	}
+
+	public void setNoOfCopies(int noOfCopies) {
+		this.noOfCopies = noOfCopies;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public void addItem()
+	{
+		
+		System.out.println("adding more items in the library");
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("enter new Identication no. of book");
+		int newIdenticationNo = sc.nextInt(); 
+		
+		System.out.println("enter no. of copies present of new edition in the library");
+		int newNoOfCopies= sc.nextInt();
+		
+		System.out.println("enter the title of new book: ");
+		String newTitle = sc.next();
+		
+		System.out.println("Identification no. of new book is " +newIdenticationNo+", no. of copies present in the library of this new book are " +newNoOfCopies+" of book title "+newTitle);
+	}
+	
+	void checkIn()
+	{
+		noOfCopies = noOfCopies + 1;
+		System.out.println("no. of copies of the book after check in: " +noOfCopies);
+	}
+	
+	void checkOut()
+	{
+		noOfCopies = noOfCopies - 1;
+		System.out.println("no. of copies of the book after check out: "+noOfCopies);
+	}
+	
+	void print()
+	{
+		System.out.println("Identification no. is "+getIdentificationNo()+ ", no. of copies present in the library is " +getNoOfCopies()+ " of book title " +getTitle());
+	}
+	
+}
+
+
+abstract class WrittenItem extends Item                                               //subclass of Item
+{                                          
+	
+	String authorName = "J. k. Rowling";
+	String authorAddress = "United Kindom";
+
+	
+	@Override
+	public void Item()
+	{
+		System.out.println("author name of the book is: " +authorName+ " and author address is: "+authorAddress);
+	}
+	
+}
+
+class Book extends WrittenItem                                                                 //subclass of WrittenItem
+{         
+	
+	public Book()
+	{
+		System.out.println("Book class which is a subclass of WrittenItem class is called");
+	}
+}
+
+class JournalPaper extends WrittenItem                                                      //subclass of WrittenItem
+{
+	public JournalPaper()
+	{
+		System.out.println("JournalPaper class, subclass of WrittenItem class is called ");
+	}
+	void yearOfBook()
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("enter book published year ");
+		int yearPublished = sc.nextInt(); 
+		
+		System.out.println("the year of the book published by author "+authorName+" is " +yearPublished);
+	}
+	
+}
+
+abstract class MediaItem extends Item                                                      //subclass of Item
+{
+	int runTime;
+	
+	public void Item()
+	{
+		System.out.println("Add More media items");
+	}
+	
+	
+}
+
+class Video extends MediaItem{                                                            //subclass of MediaItem
+	
+	String director;
+	String genre;
+	int yearReleased;
+	
+	public Video()
+	{
+		System.out.println("Video class of Media Item class is called");
+	}
+
+}
+
+
+public class CD extends MediaItem {                                                      //subclass of MediaItem
+	
+	String artish;
+	String genre;
+	
+	public CD()
+	{
+		System.out.println("CD class of Media Item class is called");
+	}
+	public static void main(String[] args) 
+	{
+		
+		CD c = new CD();
+		Book b= new Book();
+		JournalPaper j = new JournalPaper();
+		Video v = new Video();
+		
+		c.setIdentificationNo(202);
+		c.setNoOfCopies(50);
+		c.setTitle("Harry Potter");
+		
+		c.Item();
+		c.checkIn();
+		c.print();
+		c.addItem();
+		
+		b.Item();
+		j.yearOfBook();
+		
+	}
+}
+
+---------------------------------------------------------Output------------------------------------------------------
+CD class of Media Item class is called
+Book class which is a subclass of WrittenItem class is called
+JournalPaper class, subclass of WrittenItem class is called 
+Video class of Media Item class is called
+Add More media items
+no. of copies of the book after check in: 51
+Identification no. is 202, no. of copies present in the library is 51 of book title Harry Potter
+adding more items in the library
+enter new Identication no. of book
+45
+enter no. of copies present of new edition in the library
+20
+enter the title of new book: 
+Believe in yourself
+Identification no. of new book is 45, no. of copies present in the library of this new book are 20 of book title Believe
+author name of the book is: J. k. Rowling and author address is: United Kindom
+enter book published year 
+2014
+the year of the book published by author J. k. Rowling is 2014
+
+

@@ -1,0 +1,50 @@
+public class CountLettersInArray 
+{
+  int Max = 256;
+  String string ="";
+
+  public void createArray(String std)
+  {
+    String str = "Java is a platform independent language";
+    str = str.replaceAll(" ", "");
+    char[] arr = str.toCharArray();
+    for(char ch: arr)
+    {
+      string=string+ch+" ";
+    }
+    System.out.println(string+"");
+  }
+
+  public void displayCount(String st)
+  {
+    int count[] = new int[Max];
+    for(int i=0;i<st.length();i++)
+    {
+      count[st.charAt(i)]++;
+    }
+    char ch[] = new char[st.length()];
+
+    for(int i=0; i<st.length();i++)
+    {
+      ch[i] = st.charAt(i);
+      int res = 0;
+      for(int j =0; j<=i;j++)
+      {
+        if(st.charAt(i) == ch[j])
+        {
+          res++;
+        }
+      }
+      if(res == 1)
+      {
+        System.out.println("occurence of "+st.charAt(i)+ " " +count[st.charAt(i)]);
+      }
+    }
+  }
+  public static void main(String[] args) 
+  {
+    CountLettersInArray ca = new CountLettersInArray();
+    ca.createArray(ca.string);
+    ca.displayCount(ca.string);
+  }     
+}
