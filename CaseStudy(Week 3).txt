@@ -1,0 +1,334 @@
+*************************************************************Product.java***************************************************************
+
+
+package Week3;
+
+public class Product {
+	
+	//private data members
+	
+	private String pname;
+	private int pamount;
+	private int pcode;
+	private String paddrs;
+	private int ppincode;
+	
+	//getters and setters
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public int getPamount() {
+		return pamount;
+	}
+	public void setPamount(int pamount) {
+		this.pamount = pamount;
+	}
+	public int getPcode() {
+		return pcode;
+	}
+	public void setPcode(int pcode) {
+		this.pcode = pcode;
+	}
+	public String getPaddrs() {
+		return paddrs;
+	}
+	public void setPaddrs(String paddrs) {
+		this.paddrs = paddrs;
+	}
+	public int getPpincode() {
+		return ppincode;
+	}
+	public void setPpincode(int ppincode) {
+		this.ppincode = ppincode;
+	}
+	
+	
+	//default constructor
+	public Product() {
+		//super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	//parametrised constructor
+	public Product(String pname, int pamount, int pcode, String paddrs, int ppincode) {
+		super();
+		this.pname = pname;
+		this.pamount = pamount;
+		this.pcode = pcode;
+		this.paddrs = paddrs;
+		this.ppincode = ppincode;
+	}
+	
+	//toString method
+	@Override
+	public String toString() {
+		return "Product [pname=" + pname + ", pamount=" + pamount + ", pcode=" + pcode + ", paddrs=" + paddrs
+				+ ", ppincode=" + ppincode + "]";
+	}
+}
+
+
+
+*******************************************************************Client.java*************************************************************
+
+
+package Week3;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Scanner;
+import java.util.Set;
+
+public class Client {
+
+	public static void main(String[] args) {
+		
+		HashMap<Integer, Product> product = new HashMap<Integer,Product>();
+		
+		int pid = 10;
+		
+		while(true)
+		{
+			System.out.println("Product management details");
+			
+			System.out.println("1. Add Product");
+			System.out.println("2. Update product");
+			System.out.println("3. get Product");
+			System.out.println("4. getAll product");
+			System.out.println("5. Delete Product");
+			
+			System.out.println("enter any choices");
+			Scanner sc = new Scanner(System.in);
+			
+			int option = sc.nextInt();
+			
+			switch(option)
+			{
+				case 1:
+					System.out.println("Enter details to add a product in the list");
+					System.out.println("enter product name");
+					String pname = sc.next();
+					
+					System.out.println("enter product amount");
+					int pamount = sc.nextInt();
+					
+					System.out.println("enter product code");
+					int pcode = sc.nextInt();
+					
+					System.out.println("enter product address");
+					String paddrs = sc.next();
+					
+					System.out.println("enter product pincode");
+					int ppincode = sc.nextInt();
+					
+					Product pd = new Product(pname,pamount,pcode,paddrs,ppincode);
+					
+					product.put(++pid, pd);
+					
+					System.out.println("product with id " +pid+ " added successfully");
+					break;
+				
+				case 2:
+					System.out.println("enter details to update a product details in the list");
+					
+					System.out.println("enter id of the product to update");
+					int pid1=sc.nextInt();
+					
+					System.out.println("enter product name");
+					String pname1 = sc.next();
+					
+					System.out.println("enter product amount");
+					int pamount1 = sc.nextInt();
+					
+					System.out.println("enter product code");
+					int pcode1 = sc.nextInt();
+					
+					System.out.println("enter product address");
+					String paddrs1 = sc.next();
+					
+					System.out.println("enter product pincode");
+					int ppincode1 = sc.nextInt();
+					
+					Product pd1 = new Product(pname1,pamount1,pcode1,paddrs1,ppincode1);
+					
+					product.put(pid1, pd1);
+					
+					System.out.println("product with id " +pid1+ " updated successfully");
+					break;
+				
+				case 3:
+					System.out.println("enter id to get the product details");
+					int pid2 = sc.nextInt();
+					
+					Product pobj = product.get(pid2); 
+					System.out.println(pobj);
+					
+					break;
+				
+				case 4:
+					 Set<Entry<Integer,Product>> result=product.entrySet();
+			    	 Iterator<Entry<Integer,Product>> itr=result.iterator();
+			    	   
+			    	 while(itr.hasNext()) 
+			    	 {
+			    		Entry<Integer,Product> finalResult=itr.next();
+			    		   
+			    		System.out.println(finalResult.getKey()+"  "+finalResult.getValue());
+			    	}
+			    	break;
+			    	
+				case 5:
+					System.out.println("enter id of the product whose details you want to delete");
+					int pid3 = sc.nextInt();
+					
+					Product pobj1 = product.remove(pid3);
+					System.out.println("product deleted :"+pid3);
+					
+					break;
+				default:
+					System.out.println("enter right choice between the given range");
+			}
+			
+		}
+	}
+}
+
+
+*******************************************************************************Output:****************************************************************************************
+
+Product management details
+1. Add Product
+2. Update product
+3. get Product
+4. getAll product
+5. Delete Product
+enter any choices
+1
+Enter details to add a product in the list
+enter product name
+table
+enter product amount
+150
+enter product code
+302020
+enter product address
+jaipur
+enter product pincode
+303302
+product with id 11 added successfully
+Product management details
+1. Add Product
+2. Update product
+3. get Product
+4. getAll product
+5. Delete Product
+enter any choices
+1
+Enter details to add a product in the list
+enter product name
+chair
+enter product amount
+100
+enter product code
+1234
+enter product address
+jaipur
+enter product pincode
+302022
+product with id 12 added successfully
+Product management details
+1. Add Product
+2. Update product
+3. get Product
+4. getAll product
+5. Delete Product
+enter any choices
+1
+Enter details to add a product in the list
+enter product name
+box
+enter product amount
+200
+enter product code
+123
+enter product address
+jaipur
+enter product pincode
+332022
+product with id 13 added successfully
+Product management details
+1. Add Product
+2. Update product
+3. get Product
+4. getAll product
+5. Delete Product
+enter any choices
+2
+enter details to update a product details in the list
+enter id of the product to update
+11
+enter product name
+Prn
+enter product amount
+50
+enter product code
+303
+enter product address
+jaipur
+enter product pincode
+302011
+product with id 11 updated successfully
+Product management details
+1. Add Product
+2. Update product
+3. get Product
+4. getAll product
+5. Delete Product
+enter any choices
+3
+enter id to get the product details
+12
+Product [pname=chair, pamount=100, pcode=1234, paddrs=jaipur, ppincode=302022]
+Product management details
+1. Add Product
+2. Update product
+3. get Product
+4. getAll product
+5. Delete Product
+enter any choices
+4
+11  Product [pname=Prn, pamount=50, pcode=303, paddrs=jaipur, ppincode=302011]
+12  Product [pname=chair, pamount=100, pcode=1234, paddrs=jaipur, ppincode=302022]
+13  Product [pname=box, pamount=200, pcode=123, paddrs=jaipur, ppincode=332022]
+Product management details
+1. Add Product
+2. Update product
+3. get Product
+4. getAll product
+5. Delete Product
+enter any choices
+5
+enter id of the product whose details you want to delete
+12
+product deleted :12
+Product management details
+1. Add Product
+2. Update product
+3. get Product
+4. getAll product
+5. Delete Product
+enter any choices
+4
+11  Product [pname=Prn, pamount=50, pcode=303, paddrs=jaipur, ppincode=302011]
+13  Product [pname=box, pamount=200, pcode=123, paddrs=jaipur, ppincode=332022]
+Product management details
+1. Add Product
+2. Update product
+3. get Product
+4. getAll product
+5. Delete Product
+enter any choices
