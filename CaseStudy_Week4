@@ -1,4 +1,4 @@
-**********************************************************com.ac.bean-----> Book.java     //entity*************************************************************************
+*******************************************************com.ac.bean(package)-----> Book.java(java class)     //entity***********************************************************
 
 package com.ac.bean;
 
@@ -9,6 +9,7 @@ public class Book {
 		private int bookPrice;
 		private String grade;
 		
+		//getters and setters
 		public int getBookId() {
 			return bookId;
 		}
@@ -37,7 +38,7 @@ public class Book {
 		
 }
 
-******************************************************com.ac.service-----> BookService.java     //service layer**************************************************************
+***************************************************com.ac.service(package)-----> BookService.java(java class)     //service layer*********************************************
 package com.ac.service;
 
 import com.ac.bean.Book;
@@ -49,6 +50,7 @@ public class BookService {
 	{
 		String bookGrade = "" ;
 		
+		//defining how we will get book grade depending on book price
 		if(bookPrice<=1000)
 		{
 			bookGrade = "B";
@@ -83,4 +85,195 @@ public class BookService {
 		
 	}
 }
+
+
+*******************************************************com.ac.Dao(package)------>BookDao.java(java class)         //dao layer************************************************
+
+package com.ac.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.ac.bean.Book;
+
+public class BookDao {
+
+	public int addBook(Book book)
+	{
+		
+		Connection con = null;                                                         //create connection
+		PreparedStatement pstm = null;                                                //create a statement
+		
+		try {
+		con = BookDB.getConnection();
+		
+		String ins_str = "insert into book values(?,?,?,?)";
+		
+		pstm = con.prepareStatement(ins_str);
+		
+		pstm.setInt(1,book.getBookId());
+		pstm.setString(2, book.getBookTitle());
+		pstm.setInt(3, book.getBookPrice());
+		pstm.setString(4,book.getGrade());
+		int updateCount = pstm.executeUpdate();
+		
+		con.close();                                                                     //close the connection
+		
+		return updateCount;
+		}
+		 catch(Exception ex)
+		  {
+			  System.out.println(ex.toString());
+			  return 0;
+		  }
+		
+		
+	}
+	
+	public ArrayList getBookDetailsById(int bookId) throws SQLException 
+	{
+		Connection con = null;
+		PreparedStatement pstm = null;
+		
+		ResultSet rs = null;
+		con = BookDB.getConnection();
+		
+		String sel_str = "select bookTitle,bookPrice from book where bookId = ?";
+		
+		pstm = con.prepareStatement(sel_str);
+		pstm.setInt(1, bookId);
+		rs=pstm.executeQuery();
+		
+		ArrayList result = new ArrayList();
+		
+		if(rs.next())
+		{
+			result.add(rs.getString(1));
+			result.add(rs.getString(2));
+			
+		}
+		else {
+			result.add("invalid id");
+		}
+		return result;
+	}
+}
+
+
+****************************************************************com.ac.dao(package)--->BookDB.java(java class)****************************************************************
+
+package com.ac.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class BookDB {
+	public static Connection getConnection() throws SQLException
+	{
+		String driverName = "org.postgresql.Driver";
+		Connection con = DriverManager.getConnection("jdbc:postgresql://localhost/ritika", "postgres", "ritikaSQL");
+		return con;
+		
+	}
+
+}
+
+
+**********************************************************************com.ac.ui---->BookUI.java         //UI layer*********************************************************
+
+package com.ac.ui;
+
+import java.util.Scanner;
+
+import com.ac.service.BookService;
+
+public class BookUI {
+
+	public static void main(String[] args) {
+		
+		int bookId = 0;
+		String bookTitle="";
+		int bookPrice=0;
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("enter book id: ");
+		bookId = sc.nextInt();
+		System.out.println("enter book title: ");
+		bookTitle = sc.next();
+		System.out.println("enter book price: ");
+		bookPrice = sc.nextInt();
+		
+		BookService bookservice = new BookService();
+		
+		int updateCount =bookservice.addBookService(bookId, bookTitle, bookPrice);
+		System.out.println("inserted " +updateCount+ "record success");
+		
+		
+		
+	}
+}
+
+
+********************************************************************************OUTPUT**********************************************************************************
+
+postgres=# \c ritika;                                                                                                          //connect with database
+You are now connected to database "ritika" as user "postgres".
+
+ritika=# create table book(bookId int, bookTitle varchar(20), bookPrice int, bookGrade varchar(10));                          //create the table
+CREATE TABLE
+
+ritika=# \d book;                                                                                                             //describe the table book
+                        Table "public.book"
+  Column   |         Type          | Collation | Nullable | Default
+-----------+-----------------------+-----------+----------+---------
+ bookid    | integer               |           |          |
+ booktitle | character varying(20) |           |          |
+ bookprice | integer               |           |          |
+ bookgrade | character varying(10) |           |          |
+
+               ^
+ritika=# select * from book;                                                                                                   //view the inserted data into book tabe 
+ bookid | booktitle | bookprice | bookgrade
+--------+-----------+-----------+-----------
+(0 rows)
+
+
+enter book id:                                                                                                                //insering the values ino the table
+1245
+enter book title: 
+science
+enter book price: 
+500
+inserted 1 record success
+
+
+
+ritika=# select * from book;                                                                                               //view the inserted data into book tabe 
+ bookid | booktitle | bookprice | bookgrade
+--------+-----------+-----------+-----------
+   1245 | science   |       500 | B
+(1 row)
+
+
+
+enter book id:                                                                                                               //insering the values ino the table
+2493
+enter book title: 
+Holybook
+enter book price: 
+1500
+inserted 1 record success
+
+
+ritika=# select * from book;                                                                                                   //view the inserted data into book tabe 
+ bookid | booktitle | bookprice | bookgrade
+--------+-----------+-----------+-----------
+   1245 | science   |       500 | B
+   2493 | Holybook  |      1500 | A
+(2 rows)
 
