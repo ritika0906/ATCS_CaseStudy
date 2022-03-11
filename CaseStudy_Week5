@@ -90,13 +90,13 @@ import com.pizzamanagement.Dao.PizzaDao;
 import com.pizzamanagement.Dao.PizzaDaoImpl;
 import com.pizzamanagement.model.Pizza;
 
-public class PizzaServiceImpl implements PizzaService {
+public class PizzaServiceImpl implements PizzaService {                                            //implemntation of services added in PizzaSevice Interface
 
-	private PizzaDao dao;
+	private PizzaDao dao;                                                                      //dao object
 	
-	public PizzaServiceImpl() 
+	public PizzaServiceImpl()                                                                  //default PizzaServiceImpl constructor 
 	{
-		dao = new PizzaDaoImpl();	
+		dao = new PizzaDaoImpl();	                                                   //initializing the dao object 
 	}
 	
 	
@@ -162,12 +162,13 @@ package com.pizzamanagement.Dao;
 import javax.persistence.EntityManager;
 import com.pizzamanagement.model.Pizza;
 
-public class PizzaDaoImpl implements PizzaDao {
+public class PizzaDaoImpl implements PizzaDao {                                                    //implemntation of services added in PizzaDao Interface
 
-	private EntityManager entityManager;
+	private EntityManager entityManager;                                                       //EntityManager OBJECT
 	
-	public PizzaDaoImpl() {
-		entityManager = JPAUtil.getEntityManager();		
+	public PizzaDaoImpl() {                                                                    //default PizzaDaoImpl constructor 
+		
+		entityManager = JPAUtil.getEntityManager();		                          //initialize the entity object
 	}
 	
 	@Override
@@ -250,11 +251,11 @@ public class Test {
 		PizzaService service = new PizzaServiceImpl();
 		
 		Pizza pizza = new Pizza(1, "cheese", 500,"jaipur");
+		
 		//adding the data
 		//service.addPizza(pizza);
 		
 		//fetching the data
-
 		pizza = service.findPizzaByNo(1);
 		
 //		System.out.println("pizza no: " +pizza.getPizzaNo());
@@ -267,6 +268,7 @@ public class Test {
 //		pizza.setPizzaPrice(200);
 //		service.updatePizza(pizza);
 		
+		//deleting the record
 		service.deletePizza(pizza);
 		System.out.println("end of the program");
 	}
@@ -303,11 +305,6 @@ public class Test {
 	</persistence-unit>
 	
 </persistence>
-
-
-
-
-
 
 
 *****************************************************************************Output******************************************************************************************
